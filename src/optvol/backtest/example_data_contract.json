@@ -1,0 +1,94 @@
+{
+  "schema_id": "optvol_example_data_contract_v1",
+  "version": "1.0.0",
+  "scope": "Example data contract for the covered-call / bull-put-spread / tail-hedge research program. Illustrative structure; not tied to any vendor feed.",
+  "datasets": {
+    "chain_snapshot": {
+      "required_columns": [
+        "timestamp", "symbol", "expiry", "dte", "option_type", "strike",
+        "bid", "ask", "iv", "delta", "gamma", "theta", "vega",
+        "open_interest", "volume", "underlying_price"
+      ],
+      "nullable_columns": ["open_interest", "volume", "iv", "delta", "gamma", "theta", "vega"],
+      "numeric_columns": [
+        "dte", "strike", "bid", "ask", "iv", "delta", "gamma", "theta", "vega",
+        "open_interest", "volume", "underlying_price"
+      ],
+      "integer_columns": ["dte", "open_interest", "volume"],
+      "enum_constraints": {"option_type": ["call", "put"]},
+      "bounds": {
+        "dte": {"min": 0},
+        "strike": {"min_exclusive": 0},
+        "bid": {"min": 0},
+        "ask": {"min": 0},
+        "iv": {"min": 0},
+        "delta": {"min": -1, "max": 1},
+        "open_interest": {"min": 0},
+        "volume": {"min": 0},
+        "underlying_price": {"min_exclusive": 0}
+      }
+    },
+    "context_snapshot": {
+      "required_columns": [
+        "date", "symbol", "days_to_earnings", "corporate_action_flag",
+        "sector", "industry", "vix_level", "vix_timestamp_utc"
+      ],
+      "nullable_columns": [],
+      "numeric_columns": ["days_to_earnings", "vix_level"],
+      "integer_columns": ["days_to_earnings"],
+      "enum_constraints": {"corporate_action_flag": ["0", "1"]},
+      "bounds": {
+        "days_to_earnings": {"min": -30},
+        "vix_level": {"min": 0}
+      }
+    },
+    "position_snapshot": {
+      "required_columns": [
+        "program", "sub_sleeve", "position_group_id", "position_leg_role",
+        "symbol", "option_type", "expiry", "strike", "entry_timestamp",
+        "entry_price", "entry_delta", "entry_vix_level", "entry_chain_run_id",
+        "size", "fees", "max_profit_model", "max_loss_model", "risk_at_entry",
+        "exit_timestamp", "exit_price", "exit_reason", "realized_pnl", "mtm_pnl"
+      ],
+      "nullable_columns": [
+        "position_group_id", "position_leg_role", "expiry", "strike",
+        "exit_timestamp", "exit_price", "exit_reason", "realized_pnl"
+      ],
+      "numeric_columns": [
+        "strike", "entry_price", "entry_delta", "entry_vix_level", "size", "fees",
+        "max_profit_model", "max_loss_model", "risk_at_entry", "exit_price",
+        "realized_pnl", "mtm_pnl"
+      ],
+      "integer_columns": ["size"],
+      "enum_constraints": {
+        "option_type": ["call", "put", "equity"],
+        "position_leg_role": ["short_put", "long_put"],
+        "exit_reason": [
+          "profit_take", "stop_loss", "time_exit", "roll", "risk_cut",
+          "assignment", "assignment_cleanup", "exercise", "expiration", "split_avoidance"
+        ]
+      },
+      "bounds": {
+        "strike": {"min_exclusive": 0},
+        "entry_delta": {"min": -1, "max": 1},
+        "entry_vix_level": {"min": 0},
+        "size": {"min_exclusive": 0},
+        "fees": {"min": 0},
+        "risk_at_entry": {"min": 0}
+      }
+    }
+  },
+  "liquidity_gates": {
+    "short_leg_open_interest_min": 500,
+    "short_leg_volume_min": 50,
+    "short_leg_max_spread_pct_of_mid": 0.06
+  },
+  "program1_target_ranges": {
+    "dte_min": 20,
+    "dte_max": 45,
+    "covered_call_delta_min": 0.2,
+    "covered_call_delta_max": 0.35,
+    "bull_put_short_delta_min_abs": 0.2,
+    "bull_put_short_delta_max_abs": 0.3
+  }
+}

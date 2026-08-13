@@ -1,0 +1,55 @@
+# --- Secrets (never commit) ---
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+credentials.*
+
+# --- Vendor / market data (never commit) ---
+# This repo ships NO market data; demos generate synthetic data at runtime.
+*.csv
+*.zip
+*.parquet
+*.feather
+*.h5
+data/
+output/
+cboe/
+databento/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.installed.cfg
+*.egg
+
+# --- Test / tooling caches ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Editors / OS ---
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# NOTE: docs/figures/*.png ARE committed (they are the documentation figures).

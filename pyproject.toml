@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optvol"
+version = "0.1.0"
+description = "Systematic options research & model-risk toolkit: pricing, path-aware probability, strategy sleeves, and a self-validating model-risk process."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Sebastian Rendon Larrea" }]
+keywords = [
+    "quantitative-finance", "options", "volatility", "first-passage",
+    "monte-carlo", "backtesting", "model-risk", "ssvi",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Intended Audience :: Financial and Insurance Industry",
+]
+# The core library has zero runtime dependencies (pure standard library).
+dependencies = []
+
+[project.optional-dependencies]
+tests = ["pytest>=7.0"]
+figures = ["matplotlib>=3.5"]
+# Holiday-accurate settlement calendar (default is a dependency-free weekday calendar).
+calendars = ["exchange_calendars>=4.0", "pandas>=1.5"]
+dev = ["pytest>=7.0", "matplotlib>=3.5"]
+
+[project.urls]
+Homepage = "https://github.com/sebasrenla/defined-risk-options-lab"
+Repository = "https://github.com/sebasrenla/defined-risk-options-lab"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+optvol = ["backtest/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

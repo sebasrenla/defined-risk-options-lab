@@ -1,0 +1,12 @@
+# The optvol core library has NO runtime dependencies — it is pure Python
+# standard library. The packages below are only needed to run the test suite
+# and render the documentation figures.
+
+pytest>=7.0        # test suite
+matplotlib>=3.5    # examples/make_figures.py (docs figures)
+
+# Optional: holiday-accurate settlement calendar. The default is a
+# dependency-free weekday calendar; install these to use
+# optvol.economics.exchange_calendar_sessions("XNYS") instead.
+# exchange_calendars>=4.0
+# pandas>=1.5
