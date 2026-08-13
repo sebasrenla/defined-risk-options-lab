@@ -2,7 +2,7 @@
 
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-MIT-blue)
-![tests](https://img.shields.io/badge/tests-74%20passing-brightgreen)
+![CI](https://github.com/sebasrenla/defined-risk-options-lab/actions/workflows/ci.yml/badge.svg?branch=main)
 ![deps](https://img.shields.io/badge/core-zero%20dependencies-success)
 ![data](https://img.shields.io/badge/data-synthetic%20only-important)
 
