@@ -117,8 +117,8 @@ def fig_first_passage_vs_mc() -> None:
             ha="right", va="bottom", transform=ax.transAxes, fontsize=9,
             bbox=dict(boxstyle="round", fc="white", ec=ACCENT, alpha=0.9))
     fig.text(0.5, -0.02, "A naive discrete MC overstates survival (open circles, below y=x); the "
-             "continuity-corrected MC (filled) hugs the diagonal —\nthe closed form is accurate to a "
-             "median of ~0.6 points, conservative only when both barriers are close.",
+             "continuity-corrected MC (filled) hugs the diagonal —\nnear-exact for typical candidates and "
+             "systematically conservative (never optimistic), widening only when both barriers are close.",
              ha="center", fontsize=8.5, color="gray")
     fig.tight_layout(); fig.savefig(OUT / "first_passage_vs_mc.png", bbox_inches="tight"); plt.close(fig)
 

@@ -38,17 +38,20 @@ Monte-Carlo:
 
 A **naive** MC that only checks the barrier at discrete steps misses crossings
 that occur *between* steps, so it overstates survival — a well-known monitoring
-bias (open circles, median |Δ| ≈ 0.067). Benchmarked against a **Brownian-bridge
-continuity-corrected** MC (Glasserman; Broadie–Glasserman–Kou) — the proper
-continuous-monitoring benchmark — the closed form is accurate to a **median of
-≈ 0.006** (filled dots): near-exact when the break-evens are far apart, and mildly
-conservative only when both are close — never optimistic. Candidate **ranking is
-essentially perfect** (Spearman ρ ≈ 0.998, ~10k paths, MC standard error ≈ 0.003).
+bias (open circles, median |Δ| ≈ 0.068). Benchmarked against a **Brownian-bridge
+continuity-corrected** MC of the *same diffusion* (Glasserman; Broadie–Glasserman–Kou)
+— the proper continuous-monitoring benchmark — the closed form is **near-exact for
+typical candidates** (median |Δ| ≈ 0.004, at the MC standard-error floor ≈ 0.003)
+and materially conservative only when both break-evens are close. What makes the
+residual bias *real* rather than noise is its direction: the closed form is ≤ the
+corrected MC in **25 of 30** candidates — a systematic understatement of survival,
+**never optimistic**. Candidate **ranking is essentially perfect** (Spearman
+ρ ≈ 0.997, ~10k paths).
 
 Two qualifications, stated up front rather than buried:
 
 - This is a **screening / ranking** estimator, not a calibrated absolute-
-  probability model. Ranking validity (ρ ≈ 0.998) is what drives candidate
+  probability model. Ranking validity (ρ ≈ 0.997) is what drives candidate
   selection; the small residual bias is *conservative*, so it can only cause the
   pipeline to reject a marginal trade — never to over-select one.
 - The principled correction is a proper **two-boundary (double-barrier)

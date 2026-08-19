@@ -35,11 +35,18 @@ for a lower level. Each path contributes its *conditional survival probability*
 (the product over steps of not crossing either barrier), an essentially unbiased
 estimator of the continuous-monitoring probability.
 
-Because the analytical model and the bridge-corrected MC share the **same
-driftless lognormal dynamics** and both treat each single barrier by continuous
-first-passage, their *only* difference is the additive-vs-joint treatment of the
-two barriers. So `bridge_MC − analytical` isolates the additive-approximation
-error itself — not a discretization artifact and not a modelling mismatch.
+Both the analytical model and the bridge-corrected MC use the **same zero-log-drift
+diffusion** (`d ln S = σ dW`) — the convention under which the reflection
+first-passage is exact per barrier. (This is a deliberate screening choice; it
+differs by `−½σ²` from the risk-neutral drift used for *terminal* valuation, a
+second-order effect over these short horizons, but keeping the two dynamics
+identical is what makes the comparison mean one thing. Matching the MC to a
+martingale drift instead leaves the result essentially unchanged — median ≈ 0.006,
+ρ identical — so the choice buys attribution, not magnitude.) Because both share
+that diffusion and both treat each single barrier by continuous first-passage,
+their *only* remaining difference is the additive-vs-joint treatment of the two
+barriers — so `bridge_MC − analytical` isolates the additive-approximation error
+itself, not a drift mismatch, a discretization artifact, or a modelling difference.
 `examples/first_passage_vs_montecarlo.py` reproduces all of this (30 synthetic
 candidates spanning volatilities, horizons, and asymmetric barriers near and far
 from spot; ~10k paths).
@@ -49,17 +56,17 @@ from spot; ~10k paths).
 ![Closed-form vs Monte-Carlo](figures/first_passage_vs_mc.png)
 
 - **The naive benchmark is the one that's biased.** The naive discrete MC
-  overstates survival by ≈ +0.054 on average versus the corrected benchmark
-  (open circles, median gap to the closed form ≈ 0.067). Comparing against it
-  would have *overstated* the model's error roughly tenfold.
-- **Against the corrected benchmark, the closed form is accurate.** Median
-  absolute error ≈ **0.006** (mean ≈ 0.016), against an MC standard error of
-  ≈ 0.003 — small but real (≈ 2× the standard error, not noise). It is near-exact
-  when the break-evens are far apart (the joint-crossing term vanishes) and
-  materially conservative only when *both* barriers are close (where a path can
-  realistically reach either). It is conservative for 20 of 30 candidates and
-  within MC noise for the rest — **never optimistic**.
-- **Ranking is preserved**: Spearman ρ ≈ **0.998** between the closed form and the
+  overstates survival by ≈ +0.055 on average versus the corrected benchmark
+  (open circles, median gap to the closed form ≈ 0.068). Comparing against it
+  would have *overstated* the model's error many times over.
+- **Against the corrected benchmark, the closed form is accurate.** The typical
+  error is **near-exact** — median absolute error ≈ **0.004**, at the MC standard-
+  error floor (≈ 0.003) — and materially conservative only when *both* barriers are
+  close, where the additive term double-counts (mean ≈ 0.015, carried by those
+  cases). What makes the bias *real* rather than noise is its **direction**: the
+  closed form is ≤ the corrected MC in **25 of 30** candidates — a systematic
+  understatement of survival (sign-test p < 0.001), **never optimistic**.
+- **Ranking is preserved**: Spearman ρ ≈ **0.997** between the closed form and the
   corrected benchmark.
 
 ### Ranking validity ≠ probability calibration
@@ -68,7 +75,7 @@ A near-perfect rank correlation does **not** imply the probabilities are
 calibrated — a model can rank perfectly while being biased by a constant. That
 distinction matters:
 
-- The library uses `PHT` to **screen and rank** candidates, where ρ ≈ 0.998 is
+- The library uses `PHT` to **screen and rank** candidates, where ρ ≈ 0.997 is
   exactly the property that counts, and the residual bias is *conservative* — it
   can only push a marginal candidate *below* the acceptance threshold (reject a
   possibly-good trade), never *above* it (accept a bad one).

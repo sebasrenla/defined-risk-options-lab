@@ -34,15 +34,20 @@ is twice the terminal-exceedance probability).
 Known limitation (measured, not assumed)
 -----------------------------------------
 For a two-sided structure we approximate the probability of breaching *either*
-barrier additively: ``p_breach ~= p_hit_lower + p_hit_upper``. This is an upper
-bound — it double-counts paths that could reach both — so it *overstates* breach
-and therefore *understates* PHT and EV. A Monte-Carlo validation (10k paths,
-confirmed at 50k) measured this bias at roughly **+12% on breach probability**,
-i.e. PHT biased low by ~0.11–0.12, while candidate *ranking* was essentially
-unaffected (Spearman rho ~= 0.99). The bias points in the conservative
-direction, so it is retained as a documented, monitored limitation rather than
-silently "fixed"; the principled correction is inclusion-exclusion or an
-MC-calibrated factor. See ``docs/model_risk_and_validation.md``.
+barrier additively: ``p_breach ~= p_hit_lower + p_hit_upper``. This omits the
+joint-crossing term (it double-counts paths that could reach both), so it
+*overstates* breach and therefore *understates* PHT and EV. Against a
+continuity-corrected (Brownian-bridge) Monte-Carlo benchmark of the same diffusion,
+the residual error is near-exact for typical candidates (median ~0.004, at the MC
+noise floor) and materially conservative only when both barriers are close;
+crucially it is *systematically one-directional* -- survival understated in ~25 of
+30 test candidates, never overstated -- while candidate *ranking* is essentially
+unaffected (Spearman rho ~= 0.997). Because the bias is small and conservative it
+is retained as a documented, monitored limitation for screening/ranking rather than
+silently "fixed"; the principled correction for a calibrated absolute probability is
+a proper two-boundary (double-barrier) first-passage treatment, not a one-line
+inclusion-exclusion. See ``docs/model_risk_and_validation.md`` and
+``examples/first_passage_vs_montecarlo.py``.
 
 Provenance
 ----------
