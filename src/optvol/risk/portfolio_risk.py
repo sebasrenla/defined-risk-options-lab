@@ -10,7 +10,7 @@ signal generation and execution and enforces, in one place:
 * a **sector cap**,
 * **per-sleeve caps** (covered-call notional; bull-put-spread risk),
 * a **max-new-entries-per-run** throttle, and
-* a **VIX-regime exposure cut** — when volatility is elevated, every candidate's
+* a **VIX-regime exposure cut**: when volatility is elevated, every candidate's
   effective size is scaled down by a multiplier (risk-off sizing).
 
 Sizing is greedy and stateful: candidates are evaluated in order, each accepted

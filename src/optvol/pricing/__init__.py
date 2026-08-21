@@ -1,7 +1,7 @@
 """Pricing and probability primitives.
 
-``black_scholes`` — European pricing and implied-volatility inversion.
-``probability`` — terminal (POP) and first-passage (path/PHT) probabilities.
+``black_scholes``: European pricing and implied-volatility inversion.
+``probability``: terminal (POP) and first-passage (path/PHT) probabilities.
 """
 
 from .black_scholes import black_scholes_price, implied_volatility, norm_cdf

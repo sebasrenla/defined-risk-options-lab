@@ -2,13 +2,13 @@
 
 Walks through every layer of ``optvol`` on a reproducible synthetic option chain:
 
-1. Pricing / probability — price an option and round-trip its implied vol.
-2. Signal — compute the IV-curvature ("kink") across the smile.
-3. Structure — build a broken-wing butterfly and show its terminal (POP) vs
+1. Pricing / probability: price an option and round-trip its implied vol.
+2. Signal: compute the IV-curvature ("kink") across the smile.
+3. Structure: build a broken-wing butterfly and show its terminal (POP) vs
    path (PHT) probabilities and expected value.
-4. Sleeves — select a covered-call and a bull-put-spread candidate.
-5. Risk — pass the sleeve candidates through the portfolio risk overlay.
-6. Economics — book a buy-write to the cash ledger and take a snapshot.
+4. Sleeves: select a covered-call and a bull-put-spread candidate.
+5. Risk: pass the sleeve candidates through the portfolio risk overlay.
+6. Economics: book a buy-write to the cash ledger and take a snapshot.
 
 Run:
     python examples/run_demo_scan.py

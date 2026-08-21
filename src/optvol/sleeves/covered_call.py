@@ -1,20 +1,20 @@
 """Covered-call sleeve: candidate selection, sizing, and roll/exit decisions.
 
 The covered-call income sleeve sells an out-of-the-money call against long stock.
-This module holds the *decision logic* only — no data-vendor adapters, no output
+This module holds the *decision logic* only, no data-vendor adapters, no output
 writers:
 
-* :func:`select_covered_call_candidate` — from an option chain, pick the single
+* :func:`select_covered_call_candidate`: from an option chain, pick the single
   best short call inside the target **delta** and **DTE** windows that clears the
   **liquidity** gates (open interest, volume, bid/ask spread) and a **slippage**
   ceiling, then rank the survivors by proximity to a target delta (tie-broken by
   spread, then open interest, then volume).
-* :func:`determine_allocation_multiplier` — size the position by IV rank: a full
+* :func:`determine_allocation_multiplier`: size the position by IV rank: a full
   allocation when IV rank is in the preferred regime, a haircut when it is low or
   unavailable (a documented risk rule, not an ad-hoc tweak).
-* :func:`estimate_covered_call_roundtrip_fees` — the full round-trip cost (open +
+* :func:`estimate_covered_call_roundtrip_fees`: the full round-trip cost (open +
   close, option + stock legs) using the regulatory fee models.
-* :func:`evaluate_covered_call_roll_action` — the management rule set: roll on
+* :func:`evaluate_covered_call_roll_action`: the management rule set: roll on
   assignment risk near an ex-dividend date, take profit at half the entry credit,
   roll on an adverse move late in the cycle, or roll on time.
 

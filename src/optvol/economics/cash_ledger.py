@@ -4,16 +4,16 @@ The right way to measure a defined-risk options program's P&L is a **cash
 ledger**, not a sum of per-leg realized P&L. The two disagree in exactly the
 cases that matter: when a bull-put-spread short leg is assigned, the per-leg
 realized P&L captures only the equity loss, while the opening credit lives on in
-the cash ledger — so leg-summing understates the position. This module builds
+the cash ledger, so leg-summing understates the position. This module builds
 every real cash flow of the book as immutable ledger events:
 
-* **Trades** — equity and option buys/sells become two rows each (a cash
+* **Trades**: equity and option buys/sells become two rows each (a cash
   movement + a fees row), with settlement dated by a trading calendar.
-* **Assignment / exercise** — covered-call assignment, short-put assignment, and
+* **Assignment / exercise**: covered-call assignment, short-put assignment, and
   long-put exercise each generate the equity leg plus an assignment fee.
-* **Dividends** — an ex-date receivable accrual and a pay-date cash receipt (or a
+* **Dividends**: an ex-date receivable accrual and a pay-date cash receipt (or a
   single ex-date booking when no pay date is known).
-* **Margin interest** — a tiered borrow rate applied to any settled-cash debit,
+* **Margin interest**: a tiered borrow rate applied to any settled-cash debit,
   accrued daily and posted the next session.
 
 Snapshots then partition events into **settled / unsettled / receivable**
@@ -543,7 +543,7 @@ class ReplayEconomicsSnapshot:
 
 @dataclass(frozen=True)
 class PositionGroupEconomicsSnapshot:
-    """Group-scoped cash/receivable attribution from the immutable ledger — the
+    """Group-scoped cash/receivable attribution from the immutable ledger, the
     correct surface when per-leg realized P&L is not a valid group rollup (e.g.
     assignment paths where the opening credit stays in the cash ledger)."""
 

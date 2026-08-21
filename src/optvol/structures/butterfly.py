@@ -8,8 +8,8 @@ three strikes and the net credit:
 
 * the payoff metrics (max profit, max risk, whether the structure is "free-risk"),
 * the break-even prices, and
-* two probabilities — a **terminal** probability of profit (POP) and a
-  **path** probability of holding to target without breaching a break-even (PHT) —
+* two probabilities, a **terminal** probability of profit (POP) and a
+  **path** probability of holding to target without breaching a break-even (PHT),
   and the resulting expected value.
 
 The probability primitives live in :mod:`optvol.pricing.probability`; this module
@@ -110,13 +110,13 @@ class BrokenWingButterfly:
         return self.upper_strike - self.body_strike
 
     def metrics(self) -> Tuple[float, float, bool]:
-        """``(max_profit, max_risk, free_risk)`` — see :func:`payoff_metrics`."""
+        """``(max_profit, max_risk, free_risk)``: see :func:`payoff_metrics`."""
         return payoff_metrics(
             self.option_type, self.net_credit, self.lower_wing, self.upper_wing
         )
 
     def break_evens(self) -> Tuple[float, float]:
-        """``(lower_be, upper_be)`` — see :func:`break_evens`."""
+        """``(lower_be, upper_be)``: see :func:`break_evens`."""
         return break_evens(
             self.option_type,
             self.lower_strike,
@@ -175,7 +175,7 @@ class BrokenWingButterfly:
         """Path probability of holding to target without breaching a break-even.
 
         Uses the first-passage stay-within-barriers primitive over an effective
-        horizon of ``min(dte - 1, exit_days)`` days — i.e. we assume the position
+        horizon of ``min(dte - 1, exit_days)`` days, i.e. we assume the position
         is worked and closed before expiry rather than held to settlement.
         """
         if spot is None or iv is None or dte is None or spot <= 0 or iv <= 0:

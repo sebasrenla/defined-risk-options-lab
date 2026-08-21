@@ -2,7 +2,7 @@
 
 Two responsibilities:
 
-1. **Validation** — check a CSV dataset against the versioned data contract
+1. **Validation**: check a CSV dataset against the versioned data contract
    (:mod:`optvol.backtest.data_contract`): required columns present, non-nullable
    values populated, numeric/integer parsing, value bounds, enum membership, and
    cross-row structural invariants (e.g. a bull-put-spread position group must
@@ -10,7 +10,7 @@ Two responsibilities:
    collected by code with capped samples, so a bad file yields a structured
    report rather than a stack trace.
 
-2. **Liquidity-snapshot evaluation** — scan a chain snapshot for
+2. **Liquidity-snapshot evaluation**: scan a chain snapshot for
    covered-call / bull-put-spread candidacy within target delta/DTE windows and
    the contract's liquidity gates, then aggregate candidacy and pass-rates across
    many snapshots into a per-symbol opportunity summary.

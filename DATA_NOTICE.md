@@ -15,8 +15,8 @@ static arbitrage, and is not derived from any market feed. See
 
 The larger private program from which this library was extracted was developed
 using licensed data sources under their respective subscriber agreements, which
-prohibit redistribution. **None of that data — and no dataset from which it could
-be reverse-engineered — is present in this repository.** Where the docs cite
+prohibit redistribution. **None of that data, and no dataset from which it could
+be reverse-engineered, is present in this repository.** Where the docs cite
 results computed on real data, they are high-level summary statistics only
 (for example, a correlation coefficient or an approximation-bias magnitude), not
 data.
@@ -39,5 +39,5 @@ terms. In particular:
   volatility surfaces* (2014).
 
 No credentials, personal identifiers, or account information appear anywhere in
-this repository. Secrets are loaded at runtime from the OS keyring — see
+this repository. Secrets are loaded at runtime from the OS keyring. See
 `src/optvol/utils/secret_loader.py`.

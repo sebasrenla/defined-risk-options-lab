@@ -1,20 +1,20 @@
 """Tail-hedge sleeve: cost-budget governance and position management.
 
 A tail hedge holds long, far-OTM index puts (SPY/QQQ) as portfolio insurance.
-Because it is a *cost* — it bleeds premium in calm markets — the discipline is
+Because it is a *cost* (it bleeds premium in calm markets), the discipline is
 almost entirely about **spending control** and **management**, which is exactly
 what this module captures:
 
-* :func:`evaluate_tail_hedge_budget` — translate an **annualized** cost budget
+* :func:`evaluate_tail_hedge_budget`: translate an **annualized** cost budget
   (a band of ~1.5% / 1.75% / 2.0% of NAV per year) into a **monthly** target and
   under-/over-spend bands, then flag ``top_up_required`` (under-hedged this
   month) or ``pause_additional_buys`` (over budget). This is the hard risk cap
   that keeps insurance from quietly eating returns.
-* :func:`evaluate_tail_hedge_position_action` — the management rule set:
+* :func:`evaluate_tail_hedge_position_action`: the management rule set:
   **monetize** half of a position that has appreciated past a windfall multiple
   (take some crisis-alpha off the table), **hard-roll** in the final week, roll
   as the roll window opens, otherwise hold.
-* :func:`estimate_tail_hedge_fees` — per-position transaction cost (open, or
+* :func:`estimate_tail_hedge_fees`: per-position transaction cost (open, or
   round-trip).
 
 The contract-selection and budget-constrained sizing steps (choosing the strike

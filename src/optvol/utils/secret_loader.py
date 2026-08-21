@@ -10,12 +10,12 @@ Posture:
 * By default, an environment variable is tried first (convenient for dev), then
   the keyring.
 * Set ``OPTVOL_REQUIRE_KEYRING=true`` to disable the env fallback entirely and
-  require the keyring — the right setting for any shared or production-like
+  require the keyring, the right setting for any shared or production-like
   environment, so secrets can only come from the OS secret store.
 * A missing *required* secret raises with a source hint (never printing the
   value); optional secrets return ``None``.
 
-Nothing here contains a secret — only the *mechanism* for fetching one.
+Nothing here contains a secret, only the *mechanism* for fetching one.
 
 Provenance
 ----------

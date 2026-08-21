@@ -1,18 +1,18 @@
 """Bull-put-spread sleeve: candidate selection, sizing, and exit decisions.
 
 A bull put spread sells an out-of-the-money put and buys a further-OTM put for
-protection — a defined-risk way to collect premium with a bullish/neutral lean.
+protection, a defined-risk way to collect premium with a bullish/neutral lean.
 Selection is a two-leg search:
 
-* **Short leg** — a put in the target short-delta band (≈0.20–0.30 abs) that
+* **Short leg**: a put in the target short-delta band (≈0.20–0.30 abs) that
   clears the liquidity gates (open interest, volume, spread).
-* **Long leg** — a cheaper, further-OTM put in the target long-delta band
+* **Long leg**: a cheaper, further-OTM put in the target long-delta band
   (≈0.08–0.15 abs) with an acceptable spread.
-* **Pairing** — for each same-expiry (short, long) pair with the long strike
+* **Pairing**: for each same-expiry (short, long) pair with the long strike
   below the short strike, build the spread and require a sensible **width**
   (as a % of spot), a **structure spread** within tolerance, and a **credit
   floor** (a minimum credit both in absolute terms and as a % of width).
-* **Ranking** — nearest to target short delta, then long delta, then tighter
+* **Ranking**: nearest to target short delta, then long delta, then tighter
   structure spread, then richer credit-to-width, then richer short premium.
 
 Exit rules (:func:`evaluate_bull_put_spread_exit_action`): profit-take at half
@@ -22,7 +22,7 @@ drift into expiry" case the stop-loss alone misses.
 Provenance
 ----------
 Ported from the program's ``put_spread_scanner.py`` (decision functions only;
-selector reimplemented on :class:`OptionQuote` rows without pandas — the pair
+selector reimplemented on :class:`OptionQuote` rows without pandas, the pair
 ranking already used a stable sort, so tie behavior is preserved exactly).
 """
 

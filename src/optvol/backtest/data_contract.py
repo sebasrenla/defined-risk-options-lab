@@ -2,7 +2,7 @@
 
 A backtest is only as trustworthy as its inputs, so the datasets that feed it
 (option-chain snapshots, per-symbol context, and position snapshots) are
-governed by an explicit, versioned **data contract** — a JSON document that
+governed by an explicit, versioned **data contract**: a JSON document that
 declares each dataset's required columns, nullability, numeric/integer typing,
 enum constraints, and value bounds. Validation is driven entirely by that
 contract (see :mod:`optvol.backtest.validators`), so tightening a rule is a data

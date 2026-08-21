@@ -1,16 +1,16 @@
 """Probability models for defined-risk options structures.
 
 This module separates two probabilities that are easy to conflate but answer
-different questions — and getting the distinction right is the core modeling
+different questions, and getting the distinction right is the core modeling
 thesis of the whole library:
 
-1. **Terminal probability of profit (POP)** — the probability that the
+1. **Terminal probability of profit (POP)**: the probability that the
    underlying finishes, *at expiry*, in a region where the structure is
    profitable. This is what most retail tools report. It uses the lognormal
    distribution of the terminal price.
 
-2. **Path / first-passage probability (PHT — "probability of hold to target")**
-   — the probability that the underlying *never touches* a break-even barrier at
+2. **Path / first-passage probability (PHT, "probability of hold to target")**:
+   the probability that the underlying *never touches* a break-even barrier at
    any point over the holding horizon. For a position you actively manage and
    exit *before* expiry, this is the honest input: a barrier touched mid-life can
    stop you out (or force a defensive roll) even if the price would have finished

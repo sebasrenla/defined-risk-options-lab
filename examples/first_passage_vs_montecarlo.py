@@ -1,6 +1,6 @@
 """Validate the closed-form first-passage probability against Monte-Carlo.
 
-Reproduces — on synthetic data, no vendor inputs — the model-risk study behind the
+Reproduces, on synthetic data with no vendor inputs, the model-risk study behind the
 library's scoring: how good is the closed-form "probability of holding a
 defined-risk structure to target without breaching a break-even" (PHT)?
 
@@ -17,7 +17,7 @@ Getting the benchmark right (this is the subtle part)
 -----------------------------------------------------
 A *naive* Monte-Carlo that only checks the barrier at discrete time steps is
 itself biased: a continuous path can dip through a barrier and return **between**
-two steps, and the naive check misses it — so naive MC *undercounts* breaches and
+two steps, and the naive check misses it, so naive MC *undercounts* breaches and
 *overstates* survival (the "monitoring bias", O(1/√steps)). Comparing the
 analytical model against a biased benchmark would overstate the analytical error.
 
@@ -25,19 +25,19 @@ We therefore use a **Brownian-bridge continuity correction** (Glasserman 2004;
 Broadie–Glasserman–Kou 1997): between two simulated log-prices ``x0, x1`` over a
 step of variance ``v = σ²·dt``, the probability the path crossed an upper level
 ``b`` (with ``x0, x1 < b``) is ``exp(-2(b−x0)(b−x1)/v)`` (and symmetrically for a
-lower level). Each path contributes its *conditional survival probability* — the
-product over steps of not crossing either barrier — which is an (essentially)
+lower level). Each path contributes its *conditional survival probability* (the
+product over steps of not crossing either barrier), which is an (essentially)
 unbiased estimator of the continuous-monitoring survival probability.
 
 Both the analytical model and the Monte-Carlo use the **same zero-log-drift
-diffusion** (``d ln S = σ dW``) — the convention under which the reflection
+diffusion** (``d ln S = σ dW``), the convention under which the reflection
 first-passage is exact for each single barrier. This is a deliberate screening
 choice: it differs by ``−½σ²`` from the risk-neutral (martingale) drift used for
 *terminal* valuation, a second-order effect over these short horizons, but keeping
 the two dynamics *identical* is what lets ``bridge_MC − analytical`` mean exactly
 one thing. Because both share that diffusion and both treat each single barrier by
 continuous first-passage, their only remaining difference is the additive-vs-joint
-treatment of the two barriers — so the difference isolates the additive-approximation
+treatment of the two barriers, so the difference isolates the additive-approximation
 error itself, not a drift mismatch, a discretization artifact, or a modelling
 difference. (The measured error is robust to the convention: matching the MC to a
 martingale drift instead leaves the median essentially unchanged at ~0.006 and the
@@ -45,7 +45,7 @@ rank correlation identical; matching the dynamics simply makes the attribution c
 
 Scope: this validates the two-barrier *approximation* under a given lognormal
 diffusion; it does not claim that constant-vol lognormal dynamics are consistent
-with a full implied-volatility smile (they are not — the smile enters vanilla
+with a full implied-volatility smile (they are not; the smile enters vanilla
 valuation, not the path model here). The diffusion volatility is the structure's
 implied volatility, a deliberate screening-model simplification.
 
@@ -143,7 +143,7 @@ def _spearman(xs: list[float], ys: list[float]) -> float:
 
 def build_candidates(n: int, seed: int) -> list[dict]:
     """Synthetic BWB-like candidates spanning a range of volatilities, horizons,
-    and (asymmetric) barrier distances — including barriers near and far from
+    and (asymmetric) barrier distances, including barriers near and far from
     spot, and short and longer holds."""
     rng = random.Random(seed)
     out = []
@@ -182,7 +182,7 @@ def main(paths: int = 10000, steps: int = 32, n_candidates: int = 30) -> None:
     monitoring_bias = sum(r["naive"] - r["bridge"] for r in rows) / len(rows)
     rho = _spearman([r["analytical"] for r in rows], [r["bridge"] for r in rows])
 
-    print("First-passage (analytical) vs Brownian-bridge Monte-Carlo — synthetic candidates")
+    print("First-passage (analytical) vs Brownian-bridge Monte-Carlo: synthetic candidates")
     print(f"  candidates={len(rows)}  MC paths={paths}  steps={steps}  (continuity-corrected)\n")
     print(f"{'#':>2} {'iv':>5} {'Hd':>3} {'lower':>7} {'upper':>7} {'analytic':>9} "
           f"{'MC(bridge)':>10} {'±SE':>6} {'naiveMC':>8} {'bias':>7}")
@@ -203,7 +203,7 @@ def main(paths: int = 10000, steps: int = 32, n_candidates: int = 30) -> None:
           f"(naive MC overstates survival; corrected here)")
     print("\nInterpretation: against a continuity-corrected benchmark of the same diffusion, the")
     print("additive two-barrier approximation is near-exact for typical candidates (median well under")
-    print("half a point) and materially conservative only when both break-evens are close — systematically")
+    print("half a point) and materially conservative only when both break-evens are close, systematically")
     print("one-directional (survival understated, never overstated) and rank-preserving (rho ~ 0.99+). It is")
     print("a screening/ranking estimator, not a calibrated absolute-probability estimator; the")
     print("principled correction is a proper two-boundary (double-barrier) first-passage treatment.")

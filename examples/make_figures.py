@@ -1,12 +1,12 @@
 """Generate the documentation figures from the published model (synthetic data).
 
-Produces four PNGs in ``docs/figures/`` — every one computed by ``optvol`` on the
+Produces four PNGs in ``docs/figures/``, every one computed by ``optvol`` on the
 arbitrage-free SSVI synthetic surface, with no vendor data:
 
-  1. vol_skew.png            — the SSVI implied-volatility skew (30d vs 60d)
-  2. pop_vs_pht.png          — terminal POP vs path PHT (the core thesis)
-  3. first_passage_vs_mc.png — analytical first-passage vs Monte-Carlo (model risk)
-  4. butterfly_payoff.png    — a broken-wing-butterfly payoff at expiry
+  1. vol_skew.png            : the SSVI implied-volatility skew (30d vs 60d)
+  2. pop_vs_pht.png          : terminal POP vs path PHT (the core thesis)
+  3. first_passage_vs_mc.png : analytical first-passage vs Monte-Carlo (model risk)
+  4. butterfly_payoff.png    : a broken-wing-butterfly payoff at expiry
 
 Requires matplotlib (a docs-only dependency):
     python examples/make_figures.py

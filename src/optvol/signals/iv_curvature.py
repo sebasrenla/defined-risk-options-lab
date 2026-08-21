@@ -6,14 +6,14 @@ sits above (or below) the average of its two neighbours:
 
     kink = IV(strike) - (IV(left) + IV(right)) / 2
 
-A positive kink means the smile bulges upward at that strike — the option is
+A positive kink means the smile bulges upward at that strike, the option is
 locally *rich* relative to its neighbours, which is where a body-centered
 butterfly can be sold to advantage. A raw kink is hard to compare across names
 and regimes, so it is standardized two ways:
 
-* **cross-sectional z** (`kink_z_cross`) — against the distribution of kinks in
+* **cross-sectional z** (`kink_z_cross`), against the distribution of kinks in
   the *same* chain at the *same* moment, and
-* **history z** (`kink_z`) — against the strike's *own* recent history, which
+* **history z** (`kink_z`), against the strike's *own* recent history, which
   controls for a strike that is persistently kinked.
 
 Standardizing against a strike's own history (rather than an absolute threshold)

@@ -6,11 +6,11 @@ is configuration-driven: it reads a ``cfg`` mapping of fee parameters (prefixed
 closing). It handles the details that a naive ``commission * legs`` estimate
 misses:
 
-* **Per-leg commission cap** — many brokers cap commission per leg.
-* **Sell-side-only charges** — the FINRA TAF applies to *sales*; in a butterfly
+* **Per-leg commission cap**: many brokers cap commission per leg.
+* **Sell-side-only charges**: the FINRA TAF applies to *sales*; in a butterfly
   the number of contracts sold differs between the open (short the body) and the
   close (buy the body back / sell the wings), so the fee is side-aware.
-* **Per-contract vs per-order vs per-symbol** components — clearing/ORF/TAF are
+* **Per-contract vs per-order vs per-symbol** components, clearing/ORF/TAF are
   per contract, some fees are per order, and a few names carry symbol add-ons.
 
 For the *regulatory* rate schedules (ORF/TAF/SEC), see

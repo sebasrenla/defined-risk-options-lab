@@ -2,7 +2,7 @@
 
 ## The pipeline
 
-A single research pipeline flows through the modules in order — signal to sizing
+A single research pipeline flows through the modules in order, signal to sizing
 to costs to economics:
 
 ```
@@ -84,9 +84,9 @@ to costs to economics:
 ## Relationship to the original system
 
 This library is the reusable **research core** of a larger private options
-program. The published modules are refactors of the originals — reorganized into
+program. The published modules are refactors of the originals (reorganized into
 a clean package, decoupled from heavy dependencies, and stripped of tuned
-constants and live plumbing — and each was verified **behavior-identical to the
+constants and live plumbing), and each was verified **behavior-identical to the
 original** by randomized differential testing (~108,000 comparisons; see
 [model risk & validation](model_risk_and_validation.md)). The original's live
 order-routing, assignment-remediation, vendor-data ingestion, and

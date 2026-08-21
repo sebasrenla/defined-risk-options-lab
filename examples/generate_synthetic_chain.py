@@ -1,4 +1,4 @@
-"""Generate a synthetic, arbitrage-free option chain — no vendor data.
+"""Generate a synthetic, arbitrage-free option chain (no vendor data).
 
 The implied-volatility surface is built with the **SSVI** (Surface Stochastic
 Volatility Inspired) parameterization of Gatheral & Jacquier, the industry/
@@ -12,7 +12,7 @@ where ``θ = σ_atm² · T`` is the at-the-money total variance. This gives:
 
 * a realistic **equity skew** (``ρ < 0`` ⇒ out-of-the-money puts carry higher
   IV, the structural left-skew from downside/crash risk and put demand),
-* **no calendar arbitrage** — with ``φ = η/√θ`` and ``θ`` increasing in maturity,
+* **no calendar arbitrage**: with ``φ = η/√θ`` and ``θ`` increasing in maturity,
   total variance is non-decreasing in ``T``,
 * **no butterfly arbitrage** for parameters satisfying the Gatheral–Jacquier
   conditions (``θφ(1+|ρ|) < 4`` and ``θφ²(1+|ρ|) ≤ 4``), which the defaults meet.
@@ -94,7 +94,7 @@ def generate_synthetic_chain(
     rho : SSVI skew (negative for equity left-skew).
     eta : SSVI wing parameter (curvature of the smile).
     inject_kink_at_offset : if set, add ``kink_iv_bump`` to IV at this strike
-        offset — a *deliberate* local surface anomaly to exercise the curvature
+        offset, a *deliberate* local surface anomaly to exercise the curvature
         signal (this intentionally perturbs the otherwise arbitrage-free surface).
     seed : RNG seed for small quote/liquidity noise (reproducible).
     """
@@ -143,7 +143,7 @@ def check_static_arbitrage(
 
     * **Butterfly** (no negative risk-neutral density): on a **uniform strike**
       grid over ``[k_lo·spot, k_hi·spot]`` at each maturity, the model call price
-      must be non-increasing in strike and convex — equivalently the discrete
+      must be non-increasing in strike and convex, equivalently the discrete
       second derivative ``(C[i-1] − 2C[i] + C[i+1]) / h²`` (∝ the risk-neutral
       density) must be ≥ 0. (A uniform K grid is required for the second
       difference to be a valid convexity estimate.)

@@ -1,4 +1,4 @@
-# optvol — systematic options research & model-risk toolkit
+# optvol: systematic options research & model-risk toolkit
 
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-MIT-blue)
@@ -10,7 +10,7 @@ A compact, dependency-free Python library for **defined-risk equity-options
 research**: options pricing and *path-aware* probability modeling, multi-sleeve
 strategy logic (covered calls, bull put spreads, tail hedges), realistic
 execution costs, a portfolio-risk overlay, cash-ledger economics, and a
-deterministic backtest contract — all wrapped in a **model-risk discipline** that
+deterministic backtest contract, all wrapped in a **model-risk discipline** that
 validates its own approximations against Monte-Carlo simulation.
 
 It runs end-to-end on an **arbitrage-free synthetic option surface** (SSVI), so
@@ -23,28 +23,28 @@ everything here reproduces with **no licensed market data**.
 
 ---
 
-## The headline: a model that stress-tests its own approximation — with the *right* benchmark
+## The headline: a model that stress-tests its own approximation, with the *right* benchmark
 
 The library scores expected value from the probability of *holding a defined-risk
-structure to target without breaching a break-even* — a **first-passage**
+structure to target without breaching a break-even*, a **first-passage**
 (barrier-hit) probability under a lognormal diffusion, not the naive terminal
 "probability of profit." The closed form is exact for each *single* barrier
 (continuous first-passage via the reflection principle) but combines the two
 barriers **additively**, which omits the joint-crossing term. So the library
-measures that omission against Monte-Carlo — and, crucially, against the *right*
+measures that omission against Monte-Carlo, and, crucially, against the *right*
 Monte-Carlo:
 
 ![Closed-form vs. Monte-Carlo](docs/figures/first_passage_vs_mc.png)
 
 A **naive** MC that only checks the barrier at discrete steps misses crossings
-that occur *between* steps, so it overstates survival — a well-known monitoring
+that occur *between* steps, so it overstates survival, a well-known monitoring
 bias (open circles, median |Δ| ≈ 0.068). Benchmarked against a **Brownian-bridge
-continuity-corrected** MC of the *same diffusion* (Glasserman; Broadie–Glasserman–Kou)
-— the proper continuous-monitoring benchmark — the closed form is **near-exact for
+continuity-corrected** MC of the *same diffusion* (Glasserman; Broadie–Glasserman–Kou),
+the proper continuous-monitoring benchmark, the closed form is **near-exact for
 typical candidates** (median |Δ| ≈ 0.004, at the MC standard-error floor ≈ 0.003)
 and materially conservative only when both break-evens are close. What makes the
 residual bias *real* rather than noise is its direction: the closed form is ≤ the
-corrected MC in **25 of 30** candidates — a systematic understatement of survival,
+corrected MC in **25 of 30** candidates, a systematic understatement of survival,
 **never optimistic**. Candidate **ranking is essentially perfect** (Spearman
 ρ ≈ 0.997, ~10k paths).
 
@@ -53,9 +53,9 @@ Two qualifications, stated up front rather than buried:
 - This is a **screening / ranking** estimator, not a calibrated absolute-
   probability model. Ranking validity (ρ ≈ 0.997) is what drives candidate
   selection; the small residual bias is *conservative*, so it can only cause the
-  pipeline to reject a marginal trade — never to over-select one.
+  pipeline to reject a marginal trade, never to over-select one.
 - The principled correction is a proper **two-boundary (double-barrier)
-  first-passage** treatment — the joint-crossing term is itself path-dependent
+  first-passage** treatment: the joint-crossing term is itself path-dependent
   (Geman–Yor), not a one-line inclusion–exclusion.
 
 Reproduce it yourself:
@@ -73,7 +73,7 @@ underlying finishes at expiry). For a position you *actively manage and exit
 before expiry*, that overstates edge: a break-even touched mid-life can stop you
 out even if price would have finished back in the profit zone. Over the same
 holding horizon, "never breaches" is a subset of "in the profit zone at expiry",
-so the path probability is always lower — and the gap is pure path risk:
+so the path probability is always lower, and the gap is pure path risk:
 
 ![Terminal POP vs path PHT](docs/figures/pop_vs_pht.png)
 
@@ -84,24 +84,24 @@ choice is the difference between a retail screen and an institutional one.
 
 ## Highlights
 
-- **Pricing & probability** — Black-Scholes with stable bisection IV inversion;
+- **Pricing & probability**: Black-Scholes with stable bisection IV inversion;
   lognormal terminal POP; **reflection-principle first-passage** and
   path-hold (PHT) probabilities; expected value scored off the path probability.
-- **Strategy sleeves** — decision logic for **covered calls**, **bull put
+- **Strategy sleeves**: decision logic for **covered calls**, **bull put
   spreads**, and a **tail hedge**: candidate selection in delta/DTE/liquidity/
   slippage windows, IV-rank position sizing, and roll/exit rule sets.
-- **Execution realism** — a **time-varying regulatory fee model** (ORF/TAF/SEC
+- **Execution realism**: a **time-varying regulatory fee model** (ORF/TAF/SEC
   Section 31 keyed to their historical effective dates) so a backtest charges the
   fees actually in force on each trade date; plus per-structure commission logic.
-- **Portfolio risk overlay** — aggregate / per-symbol / sector / per-sleeve caps,
+- **Portfolio risk overlay**: aggregate / per-symbol / sector / per-sleeve caps,
   a greedy stateful sizer, and a **VIX-regime exposure cut**.
-- **Cash-ledger economics** — models the *real* cash flows of an options book:
-  assignment/exercise, dividends, tiered margin interest, and T+N settlement — so
+- **Cash-ledger economics**: models the *real* cash flows of an options book:
+  assignment/exercise, dividends, tiered margin interest, and T+N settlement, so
   P&L is a cash ledger, not a naive sum of per-leg P&L.
-- **Deterministic backtest contract** — a versioned data contract with schema
+- **Deterministic backtest contract**: a versioned data contract with schema
   validation, and an injectable trading calendar (holiday-free by default,
   holiday-accurate on request).
-- **Model-risk discipline** — the first-passage-vs-Monte-Carlo study above; an
+- **Model-risk discipline**: the first-passage-vs-Monte-Carlo study above; an
   **arbitrage-free SSVI** synthetic surface with a static-no-arbitrage self-check;
   and a **74-test** suite covering every module.
 
@@ -174,7 +174,7 @@ The generator produces a realistic equity **left-skew** (≈ +11 vol points at �
 for 30-day, flattening with maturity), and ships a `check_static_arbitrage()`
 self-test that verifies **no butterfly arbitrage** (non-negative risk-neutral
 density) and **no calendar arbitrage** (total variance non-decreasing in
-maturity). It is deliberately *neutral* — it does not tilt strikes, spreads, or
+maturity). It is deliberately *neutral*: it does not tilt strikes, spreads, or
 liquidity to flatter any strategy. Details in
 [`docs/synthetic_data.md`](docs/synthetic_data.md).
 
@@ -190,7 +190,7 @@ Rigor is the point of this project, not an afterthought. See
 [`docs/model_risk_and_validation.md`](docs/model_risk_and_validation.md) for:
 
 - the **first-passage-vs-Monte-Carlo** study (reproduced above);
-- the **multi-agent research process** the original program was built under — an
+- the **multi-agent research process** the original program was built under: an
   implementer, an independent challenger, and a human PM, with stage-one
   independence, separation of duties, and an evidence-first quality bar;
 - the **~108,000-comparison** differential validation that proved this
@@ -206,14 +206,14 @@ options program. To make it clean, legible, and safe to publish:
 
 - **Behavior was preserved and proven.** Each module was refactored (better
   structure, fewer dependencies) and then checked against the original with
-  randomized differential tests — **~108,000 comparisons, all exact** — so the
+  randomized differential tests (**~108,000 comparisons, all exact**), so the
   published code is *behavior-identical* on the logic it ships.
 - **Live plumbing is excluded.** The original's broker order-routing,
   assignment-remediation, and vendor-data ingestion are described in the docs but
   not shipped (they add operational risk, not research insight).
 - **Tuned parameters are illustrative.** Where the original uses
   production-calibrated thresholds/weights, this repo ships *example* values and
-  explains the reasoning — the functions are identical; only the constants differ.
+  explains the reasoning: the functions are identical; only the constants differ.
 - **One honest accuracy caveat:** the default settlement calendar is holiday-free
   for zero-dependency runnability; inject a real exchange calendar
   (`exchange_calendar_sessions("XNYS")`) for holiday-accurate settlement.
@@ -236,9 +236,9 @@ that asserts the synthetic surface is arbitrage-free.
 
 - **No third-party or vendor market data is included.** See
   [`DATA_NOTICE.md`](DATA_NOTICE.md).
-- This is a **research and educational** project — not investment advice, and not
+- This is a **research and educational** project, not investment advice, and not
   affiliated with or endorsed by any firm. See [`DISCLAIMER.md`](DISCLAIMER.md).
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+MIT. See [`LICENSE`](LICENSE).

@@ -4,15 +4,15 @@ Realistic backtests must charge the fees that were *actually in effect on each
 trade date*, not today's rates. US options and equities carry several small
 per-contract / per-share charges that change on published effective dates:
 
-* **Options Regulatory Fee (ORF)** and **clearing** — per contract.
-* **FINRA Trading Activity Fee (TAF)** — per contract (options) / per share
+* **Options Regulatory Fee (ORF)** and **clearing**: per contract.
+* **FINRA Trading Activity Fee (TAF)**: per contract (options) / per share
   (equity sales), with a per-order cap on equity sales.
-* **SEC Section 31 fee** — per dollar of equity *sale* proceeds (quoted per
+* **SEC Section 31 fee**: per dollar of equity *sale* proceeds (quoted per
   $1,000,000), which the SEC re-sets periodically.
 
 All schedules below are **public** (SEC / FINRA / exchange fee filings), so they
 are safe to publish. Broker commissions are configured separately (they are
-account-specific) — see :mod:`optvol.execution.fees_butterfly`.
+account-specific), see :mod:`optvol.execution.fees_butterfly`.
 
 Rates are resolved by looking up the most recent effective date on or before the
 trade date. Values past the current year are the published forward schedule and

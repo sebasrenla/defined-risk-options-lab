@@ -1,4 +1,4 @@
-# The optvol core library has NO runtime dependencies — it is pure Python
+# The optvol core library has NO runtime dependencies; it is pure Python
 # standard library. The packages below are only needed to run the test suite
 # and render the documentation figures.
 

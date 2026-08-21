@@ -4,7 +4,7 @@ Every surviving candidate is reduced to a single, bounded score that blends
 several shaped sub-scores. The design goals are:
 
 * **Each factor is bounded to [0, 1]** and shaped so that "good" saturates
-  rather than running away — a spectacular value on one axis should not let a
+  rather than running away, a spectacular value on one axis should not let a
   candidate ignore the others.
 * **The score is comparable across runs.** The expected-value sub-score uses an
   *absolute* normalization (``min(ev / scale, 1)``) rather than a per-batch
@@ -16,7 +16,7 @@ Notes on parameters (calibration / governance)
 The ``scale`` and factor weights below are **illustrative defaults**. In the
 private research program these are configuration-driven and were *calibrated*
 from a large candidate sample (~21.7k rows) so that a median trade scores 0.50;
-that recalibration — replacing an earlier batch min-max normalization — was
+that recalibration, replacing an earlier batch min-max normalization, was
 measured for its downstream effect (it materially reduced portfolio
 concentration, Herfindahl index falling by roughly a third) and was adopted only
 after an independent-review sign-off, with a documented rollback path. The exact
@@ -161,7 +161,7 @@ def score_liquidity(
     """Liquidity score = ``min(oi_score, volume_score, spread_score)``.
 
     Taking the *minimum* (not an average) is deliberate: liquidity is a
-    weakest-link property — a great open interest does not rescue an untradeable
+    weakest-link property, a great open interest does not rescue an untradeable
     spread. Absolute-dollar spread is preferred for small credits when available,
     otherwise percentage spread is used.
     """

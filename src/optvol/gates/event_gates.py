@@ -2,7 +2,7 @@
 events.
 
 The income sleeves (covered calls, bull put spreads) are premium-selling
-strategies whose worst outcomes cluster around *known scheduled events* — an
+strategies whose worst outcomes cluster around *known scheduled events*, an
 earnings release can gap the underlying straight through a short strike, a
 corporate action (split, special dividend, M&A) can distort the option chain,
 and a market-wide macro print (FOMC, CPI, NFP) injects portfolio-level jump
@@ -12,7 +12,7 @@ risk into them.
 ``evaluate_program1_entry_gates`` returns a structured decision with granular
 reason codes and diagnostics, so a blocked entry is fully explainable and
 auditable. Missing/invalid context fields can themselves block an entry
-(``strict_context_fields``) — a fail-closed posture: if we cannot confirm the
+(``strict_context_fields``), a fail-closed posture: if we cannot confirm the
 event context, we do not open.
 
 Provenance
